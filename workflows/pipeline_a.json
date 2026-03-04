@@ -1,0 +1,95 @@
+{
+  "name": "Pipeline A",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "0001a8e0-b7d3-4ede-ae2f-231af02017c0",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "793fb3cb-2fd2-4a0e-b5f9-50bbff42de4d",
+      "name": "Webhook",
+      "webhookId": "0001a8e0-b7d3-4ede-ae2f-231af02017c0"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"result\": \"{{ $json.body.success }}\", \"output\": \"{{ $json.body.output }}\"}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        416,
+        0
+      ],
+      "id": "bafbd314-faa0-428d-ab10-a86102975261",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://172.17.0.1:3000/run-pipeline-a ",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"transcriptPath\": \"{{ $json.body.transcriptPath }}\", \"accountId\": \"{{ $json.body.accountId }}\"}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "c10ccd02-2685-4ac7-a94b-01b0be3e27b4",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": -1
+  },
+  "versionId": "f377fb83-a7c3-484e-8661-b3238e941ec1",
+  "meta": {
+    "instanceId": "40341e6b81d0ecb9d7fc8fafe55a0c32d59d761dc3973a333b56d6fcc2e57577"
+  },
+  "id": "r7cnjZtbuvNe4VeU",
+  "tags": []
+}
