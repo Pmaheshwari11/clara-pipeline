@@ -44,7 +44,7 @@ ${
         "Content-Type": "application/json",
         Accept: "application/vnd.github+json",
       },
-      body: JSON.stringify({ title, body, labels: ["onboarding", version] }),
+      body: JSON.stringify({ title, body }),
     });
 
     const data = await res.json();
